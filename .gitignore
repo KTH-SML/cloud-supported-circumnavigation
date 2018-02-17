@@ -1,0 +1,15 @@
+# Temp
+*~
+
+# Python compiled
+*.pyc
+
+# Bagfiles
+*.bag
+bagfiles/*
+
+# Make
+*.cmake
+CMakeFiles/*
+cmake/*
+catkin_generated/*
