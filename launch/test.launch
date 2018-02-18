@@ -1,201 +1,79 @@
 <launch>
 
-   <param name='agent_names' value='clara dario'/>
-   <param name='agent_colors' value='blue green'/>
-   <!-- <arg name='agent_names' value='agent1 agent2 agent3'/> -->
-   <!-- <param name='agent_names' value='$(arg agent_names)'/> -->
-
-   <!-- <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/> -->
 
 
-   <group ns = 'clara'>
+   <param name='agent_names' value='clara dario antonio francesco'/>
+   <param name='agent_colors' value='blue green yellow magenta'/>
 
-    <!-- <param name='deltaT' type='double' value='2.0'/>
-    <param name='agentID' type='str' value='agent1'/>
-    <param name='delay' type='double' value='0.0'/> -->
-
-    <rosparam param = 'initial_position'>[1.0, 0.0]</rosparam>
-
-    <!-- <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-    <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-    <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/> -->
-
-    <node name='vehicle_simulator'
-      pkg='circumnavigation_cloud'
-      type='vehicle_simulator.py' output="screen"/>
-
-    <node name='controller'
-      pkg='circumnavigation_cloud'
-      type='controller.py' output="screen"/>
-
-    <node name='sensor_simulator'
-      pkg='circumnavigation_cloud'
-      type='sensor_simulator.py' output="screen"/>
-
-   </group>
-
-
-   <group ns = 'dario'>
-
-    <!-- <param name='deltaT' type='double' value='2.0'/>
-    <param name='agentID' type='str' value='agent1'/>
-    <param name='delay' type='double' value='0.0'/> -->
-
-    <rosparam param = 'initial_position'>[2.0, 3.0]</rosparam>
-
-    <!-- <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-    <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-    <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/> -->
-
-    <node name='vehicle_simulator'
-      pkg='circumnavigation_cloud'
-      type='vehicle_simulator.py' output="screen"/>
-
-    <node name='controller'
-      pkg='circumnavigation_cloud'
-      type='controller.py' output="screen"/>
-
-    <node name='sensor_simulator'
-      pkg='circumnavigation_cloud'
-      type='sensor_simulator.py' output="screen"/>
-
-   </group>
-
-
-   <!-- <group ns = 'agent2'>
-
-       <param name='deltaT' type='double' value='2.0'/>
-
-       <param name='agentID' type='str' value='agent2'/>
-
-       <param name='delay' type='double' value='1.0'/>
-
-       <rosparam param = 'initial_position'>[0.0, 1.0]</rosparam>
-
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/>
-
-       <node name='simulator'
-        pkg='circumnavigation_cloud'
-        type='simulator.py' output="screen"/>
-
-       <node name='controller'
-        pkg='circumnavigation_cloud'
-        type='controller.py' output="screen"/>
-
-       <node name='sensor_simulator'
-        pkg='circumnavigation_cloud'
-        type='sensor_simulator.py' output="screen"/>
-
-   </group> -->
-
-
-   <!-- <group ns = 'agent3'>
-
-       <param name='deltaT' type='double' value='2.0'/>
-
-       <param name='agentID' type='str' value='agent3'/>
-
-       <param name='delay' type='double' value='2.0'/>
-
-       <rosparam param = 'initial_position'>[0.5, 0.5]</rosparam>
-
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/>
+   <param name='gain' value='0.3'/>
+   <param name='alpha' value='1.0'/>
+   <param name='desired_distance' value='1.0'/>
 
 
 
-       <node name='simulator'
-        pkg='circumnavigation_cloud'
-        type='simulator.py' output="screen"/>
+   <group ns='clara'>
 
-       <node name='controller'
-        pkg='circumnavigation_cloud'
-        type='controller.py' output="screen"/>
+    <param name='name' type='str' value='clara'/>
+    <rosparam param='initial_position'>[1.0, 0.0]</rosparam>
 
-       <node name='sensor_simulator'
-        pkg='circumnavigation_cloud'
-        type='sensor_simulator.py' output="screen"/>
+    <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
 
-   </group> -->
+    <node name='controller' pkg='circumnavigation_cloud' type='controller.py' output="screen"/>
 
-<!--    <group ns = 'agent4'>
-
-       <param name='deltaT' type='double' value='2.0'/>
-
-       <param name='agentID' type='int' value='3'/>
-
-       <param name='delay' type='double' value='2.0'/>
-
-       <rosparam param = 'initial_position'>[1.0, 0.0]</rosparam>
-
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/>
-
-
-
-       <node name='simulator'
-        pkg='circumnavigation_cloud'
-        type='simulator.py' output="screen"/>
-
-       <node name='controller'
-        pkg='circumnavigation_cloud'
-        type='controller.py' output="screen"/>
-
-       <node name='sensor_simulator'
-        pkg='circumnavigation_cloud'
-        type='sensor_simulator.py' output="screen"/>
+    <node name='sensor_simulator' pkg='circumnavigation_cloud' type='sensor_simulator.py' output="screen"/>
 
    </group>
 
 
 
-   <group ns = 'agent5'>
+   <group ns='dario'>
 
-       <param name='deltaT' type='double' value='2.0'/>
+    <param name='name' type='str' value='dario'/>
+    <rosparam param='initial_position'>[2.0, 3.0]</rosparam>
 
-       <param name='agentID' type='int' value='4'/>
+    <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
 
-       <param name='delay' type='double' value='2.0'/>
+    <node name='controller' pkg='circumnavigation_cloud' type='controller.py' output="screen"/>
 
-       <rosparam param = 'initial_position'>[-1.0, 1.0]</rosparam>
+    <node name='sensor_simulator' pkg='circumnavigation_cloud' type='sensor_simulator.py' output="screen"/>
 
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/target.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/controller.yaml'/>
-       <rosparam command='load' file='$(find circumnavigation_cloud)/param/simulator.yaml'/>
-
+   </group>
 
 
-       <node name='simulator'
-        pkg='circumnavigation_cloud'
-        type='simulator.py' output="screen"/>
+   <group ns='antonio'>
 
-       <node name='controller'
-        pkg='circumnavigation_cloud'
-        type='controller.py' output="screen"/>
+    <param name='name' type='str' value='antonio'/>
+    <rosparam param='initial_position'>[-2.0, -1.0]</rosparam>
 
-       <node name='sensor_simulator'
-        pkg='circumnavigation_cloud'
-        type='sensor_simulator.py' output="screen"/>
+    <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
 
-   </group> -->
+    <node name='controller' pkg='circumnavigation_cloud' type='controller.py' output="screen"/>
 
-   <!-- <node name='cloud_agent_info'
-     pkg='circumnavigation_cloud'
-     type='cloud_agent_info.py' output="screen"/>
+    <node name='sensor_simulator' pkg='circumnavigation_cloud' type='sensor_simulator.py' output="screen"/>
+
+   </group>
 
 
-   <rosparam command='load' file='$(find circumnavigation_cloud)/param/plotter.yaml'/> -->
+   <group ns='francesco'>
 
-  <node name='target'
-    pkg='circumnavigation_cloud'
-    type='target.py' output="screen"/>
+    <param name='name' type='str' value='francesco'/>
+    <rosparam param='initial_position'>[-2.0, -1.0]</rosparam>
 
-  <node name='plotter'
-    pkg='circumnavigation_cloud'
-    type='plotter.py' output="screen"/>
+    <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
+
+    <node name='controller' pkg='circumnavigation_cloud' type='controller.py' output="screen"/>
+
+    <node name='sensor_simulator' pkg='circumnavigation_cloud' type='sensor_simulator.py' output="screen"/>
+
+   </group>
+
+
+  <node name='cloud' pkg='circumnavigation_cloud' type='cloud.py' output="screen"/>
+
+  <node name='target' pkg='circumnavigation_cloud' type='target.py' output="screen"/>
+
+  <node name='plotter' pkg='circumnavigation_cloud' type='plotter.py' output="screen"/>
+
+
 
 </launch>

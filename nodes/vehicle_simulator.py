@@ -12,13 +12,14 @@ import threading as thd
 rp.init_node('vehicle_simulator')
 
 LOCK = thd.Lock()
-# rp.logwarn(type(rp.get_param("initial_position")))
+
 position = gmi.Point(rp.get_param("initial_position"))
+position_timestamp = rp.get_time()
 velocity = gmi.Vector()
 
 
 
-FREQUENCY = 10e1
+FREQUENCY = 60.0
 RATE = rp.Rate(FREQUENCY)
 TIME_STEP = 1.0/FREQUENCY
 
@@ -47,8 +48,10 @@ pub = rp.Publisher(
 
 while not rp.is_shutdown():
     LOCK.acquire()
-    position += TIME_STEP*velocity
-    velocity = gmi.Vector()
+    time = rp.get_time()
+    position += (time-position_timestamp)*velocity
+    position_timestamp = time
+    # velocity = gmi.Vector()
     LOCK.release()
     pub.publish(position.serialize())
     RATE.sleep()

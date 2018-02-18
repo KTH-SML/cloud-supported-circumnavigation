@@ -13,9 +13,10 @@ import threading as thd
 import math as mth
 
 
-GAIN = 1.0
-ALPHA = 1.0
-DESIRED_DISTANCE = 1.0
+GAIN = rp.get_param('/gain')
+ALPHA = rp.get_param('/alpha')
+DESIRED_DISTANCE = rp.get_param('/desired_distance')
+NAME = rp.get_param('name')
 
 LOCK = thd.Lock()
 
@@ -24,9 +25,12 @@ vehicle_position = None
 measured_bearing = None
 estimated_bearing = None
 
+received_beta = 0.0
+next_cloud_access = 0.0
+
 
 rp.init_node('controller')
-RATE = rp.Rate(30.0)
+RATE = rp.Rate(60.0)
 
 
 
@@ -53,12 +57,9 @@ estimated_bearing = gmi.Versor(measured_bearing)
 rp.wait_for_message('vehicle_position', gms.Point)
 estimated_target_position = vehicle_position + DESIRED_DISTANCE*estimated_bearing
 
-#Call to the service '/Cloud_Service'
-# rp.wait_for_service('/Cloud_Service')
-# cloud_proxy = rp.ServiceProxy('/Cloud_Service', srvc.CloudService)
-# cloud_resp = cloud_proxy(str(AGENT_NAME), position)
-# beta = cloud_resp.beta
-# bearing_reference = gmi.Versor(position)
+
+rp.wait_for_service('/cloud_service')
+cloud_service_proxy = rp.ServiceProxy('/cloud_service', ccs.CloudService)
 
 
 
@@ -93,8 +94,13 @@ while not rp.is_shutdown():
         estimated_target_position = vehicle_position + DESIRED_DISTANCE*estimated_bearing
     else:
         estimated_bearing = gmi.Versor(estimated_target_position - vehicle_position)
+    if rp.get_time() > next_cloud_access:
+        rp.loginfo('{} is accessing the cloud'.format(NAME))
+        response = cloud_service_proxy.call(NAME, estimated_bearing)
+        received_beta = response.beta
+        next_cloud_access = response.next_access
     tangent_versor = estimated_bearing.rotate(-mth.pi/2)
-    cmdvel = GAIN*ALPHA*tangent_versor
+    cmdvel = GAIN*(ALPHA+received_beta)*tangent_versor
     LOCK.release()
 
     cmdvel_pub.publish(cmdvel.serialize())

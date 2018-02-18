@@ -1,4 +1,5 @@
-string ID
-geomtwo/Versor bearing_measurement
+string name
+geomtwo/Versor bearing
 ---
 float64 beta
+float64 next_access
