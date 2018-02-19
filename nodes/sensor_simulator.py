@@ -64,4 +64,13 @@ rp.Service(
     handler = sensor_service_handler)
 
 
-rp.spin()
+
+bearing_pub = rp.Publisher(name='bearing', data_class=gms.Versor, queue_size=10)
+
+RATE = rp.Rate(10.0)
+while not rp.is_shutdown():
+    LOCK.acquire()
+    bearing = gmi.Versor(target_position-position)
+    bearing_pub.publish(bearing.serialize())
+    LOCK.release()
+    RATE.sleep()

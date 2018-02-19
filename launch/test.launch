@@ -74,6 +74,9 @@
 
   <node name='plotter' pkg='circumnavigation_cloud' type='plotter.py' output="screen"/>
 
+  <node name='monitor' pkg='circumnavigation_cloud' type='monitor.py' output="screen"/>
+
+  <node name='record_betas' pkg='rosbag' type='record' args='record -o  $(find circumnavigation_cloud)/bags/real_betas /clara/real_beta /dario/real_beta /antonio/real_beta /francesco/real_beta'/>
 
 
 </launch>

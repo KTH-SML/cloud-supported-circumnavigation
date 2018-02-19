@@ -1,3 +1,4 @@
+import kthcolors.inplace as kti
 import matplotlib.pyplot as plt
 import rosbag as rb
 import sys
@@ -6,13 +7,14 @@ import math
 bagfilename = sys.argv[1]
 bag = rb.Bag(bagfilename)
 
-COLORS = iter("blue red green orange magenta cyan purple".split())
+COLORS = iter("blue green yellow magenta".split())
 lines = dict()
 times = list()
 start_time = None
 sample = None
 
-for topic, msg, time in bag.read_messages(topics=['/agent1/beta', '/agent2/beta', '/agent3/beta']):
+
+for topic, msg, time in bag.read_messages(topics=['/clara/real_beta', '/dario/real_beta', '/antonio/real_beta', '/francesco/real_beta']):
     if sample is None:
         sample = topic
         print topic
@@ -31,9 +33,10 @@ bag.close()
 plt.figure()
 plt.grid(True)
 for name, line in lines.items():
-    plt.plot(line["time"], line["data"], label=r'$\beta_i(t)$', color=next(COLORS))
+    plt.plot(line["time"], line["data"], label=name, color=next(COLORS))
 plt.legend()
 plt.xlabel(r"$t$")
+plt.ylabel(r'$\beta_i(t)$')
 
 
 plt.show()
