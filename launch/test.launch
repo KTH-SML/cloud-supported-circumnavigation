@@ -2,11 +2,11 @@
 
 
 
-   <param name='agent_names' value='clara dario antonio francesco'/>
-   <param name='agent_colors' value='blue green yellow magenta'/>
+   <param name='agent_names' value='clara dario antonio francesco davide'/>
+   <param name='agent_colors' value='blue green yellow magenta red'/>
 
-   <param name='gain' value='0.3'/>
-   <param name='alpha' value='1.0'/>
+   <param name='gain' value='0.2'/>
+   <param name='alpha' value='0.4'/>
    <param name='desired_distance' value='1.0'/>
 
 
@@ -43,7 +43,7 @@
    <group ns='antonio'>
 
     <param name='name' type='str' value='antonio'/>
-    <rosparam param='initial_position'>[-2.0, -1.0]</rosparam>
+    <rosparam param='initial_position'>[-2.0, -2.0]</rosparam>
 
     <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
 
@@ -57,7 +57,21 @@
    <group ns='francesco'>
 
     <param name='name' type='str' value='francesco'/>
-    <rosparam param='initial_position'>[-2.0, -1.0]</rosparam>
+    <rosparam param='initial_position'>[-1.0, -2.0]</rosparam>
+
+    <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
+
+    <node name='controller' pkg='circumnavigation_cloud' type='controller.py' output="screen"/>
+
+    <node name='sensor_simulator' pkg='circumnavigation_cloud' type='sensor_simulator.py' output="screen"/>
+
+   </group>
+
+
+   <group ns='davide'>
+
+    <param name='name' type='str' value='davide'/>
+    <rosparam param='initial_position'>[2.0, 2.0]</rosparam>
 
     <node name='vehicle_simulator' pkg='circumnavigation_cloud' type='vehicle_simulator.py' output="screen"/>
 
@@ -76,7 +90,9 @@
 
   <node name='monitor' pkg='circumnavigation_cloud' type='monitor.py' output="screen"/>
 
-  <node name='record_betas' pkg='rosbag' type='record' args='record -o  $(find circumnavigation_cloud)/bags/real_betas /clara/real_beta /dario/real_beta /antonio/real_beta /francesco/real_beta'/>
+  <!-- <node name='record_betas' pkg='rosbag' type='record' args='record -o  $(find circumnavigation_cloud)/bags/real_betas /clara/real_beta /dario/real_beta /antonio/real_beta /francesco/real_beta'/> -->
+
+  <node name='record_betas' pkg='rosbag' type='record' args='record -a -o $(find circumnavigation_cloud)/bags/all'/>
 
 
 </launch>

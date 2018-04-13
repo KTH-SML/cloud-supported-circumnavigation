@@ -7,14 +7,14 @@ import math
 bagfilename = sys.argv[1]
 bag = rb.Bag(bagfilename)
 
-COLORS = iter("blue green yellow magenta".split())
+COLORS = iter("blue green yellow magenta red".split())
 lines = dict()
 times = list()
 start_time = None
 sample = None
 
 
-for topic, msg, time in bag.read_messages(topics=['/clara/real_beta', '/dario/real_beta', '/antonio/real_beta', '/francesco/real_beta']):
+for topic, msg, time in bag.read_messages(topics=['/clara/real_beta', '/dario/real_beta', '/antonio/real_beta', '/francesco/real_beta', '/davide/real_beta']):
     if sample is None:
         sample = topic
         print topic
@@ -33,10 +33,11 @@ bag.close()
 plt.figure()
 plt.grid(True)
 for name, line in lines.items():
-    plt.plot(line["time"], line["data"], label=name, color=next(COLORS))
-plt.legend()
+    plt.plot(line["time"], line["data"], label=name, color=next(COLORS), linewidth=2)
+    plt.xlim([0, max(line["time"])])
+# plt.legend()
 plt.xlabel(r"$t$")
 plt.ylabel(r'$\beta_i(t)$')
-
+plt.savefig("./pics/betas.pdf")
 
 plt.show()

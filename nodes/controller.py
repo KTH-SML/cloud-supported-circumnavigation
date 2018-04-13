@@ -75,6 +75,10 @@ estimate_publisher = rp.Publisher(
     data_class = gms.Point,
     queue_size = 10)
 
+cloud_access_publisher = rp.Publisher(
+    name = 'cloud_access',
+    data_class = sms.Empty,
+    queue_size = 10)
 
 #Publisher 'beta' (for bagfile)
 # beta_pub = rp.Publisher(
@@ -95,6 +99,7 @@ while not rp.is_shutdown():
     else:
         estimated_bearing = gmi.Versor(estimated_target_position - vehicle_position)
     if rp.get_time() > next_cloud_access:
+        cloud_access_publisher.publish()
         rp.loginfo('{} is accessing the cloud'.format(NAME))
         response = cloud_service_proxy.call(NAME, estimated_bearing)
         received_beta = response.beta

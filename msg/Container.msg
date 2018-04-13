@@ -1,3 +1,0 @@
-float32 beta
-geomtwo/Vector bear_msrm_neigh
-float32 control_signal_neigh

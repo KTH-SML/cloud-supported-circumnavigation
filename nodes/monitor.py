@@ -23,9 +23,18 @@ for name in AGENT_NAMES:
     bearings[name] = None
     betas[name] = None
 
+cloud_access_beta_pubs = dict()
+for name in AGENT_NAMES:
+    cloud_access_beta_pubs[name] = rp.Publisher(name="{}/cloud_access_beta".format(name), data_class=sms.Float64, queue_size=10)
+
 def bearing_callback(msg, name):
     LOCK.acquire()
     bearings[name] = gmi.Versor(msg)
+    LOCK.release()
+
+def cloud_access_callback(msg, name):
+    LOCK.acquire()
+    if name in betas: cloud_access_beta_pubs[name].publish(betas[name])
     LOCK.release()
 
 beta_pubs = dict()

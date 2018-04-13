@@ -13,3 +13,6 @@ bagfiles/*
 CMakeFiles/*
 cmake/*
 catkin_generated/*
+
+# Pictures
+pics/*
